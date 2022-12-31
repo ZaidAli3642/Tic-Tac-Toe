@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+import "./App.css";
+import Start from "./components/Start";
+import Finish from "./components/Finish";
+import HumanvsHuman from "./components/HumanvsHuman";
+import HumanvsComputer from "./components/HumanvsComputer";
+
+const App: React.FC = () => {
+  const [gameStatus, setGameStatus] = useState<string>("started");
+  const [player, setPlayer] = useState<string>("");
+  const [letter, setLetter] = useState<string>("");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {gameStatus === "started" && (
+        <Start
+          gameStatus={gameStatus}
+          setGameStatus={setGameStatus}
+          player={player}
+          setPlayer={setPlayer}
+          letter={letter}
+          setLetter={setLetter}
+        />
+      )}
+      {gameStatus === "playing" && player === "human" && (
+        <HumanvsHuman gameStatus={gameStatus} setGameStatus={setGameStatus} />
+      )}
+      {gameStatus === "playing" && player === "computer" && (
+        <HumanvsComputer
+          gameStatus={gameStatus}
+          setGameStatus={setGameStatus}
+          letter={letter}
+        />
+      )}
+      {gameStatus === "finished" && (
+        <Finish
+          gameStatus={gameStatus}
+          setGameStatus={setGameStatus}
+          player={player}
+          setPlayer={setPlayer}
+          letter={letter}
+          setLetter={setLetter}
+        />
+      )}
     </div>
   );
-}
+};
 
 export default App;
