@@ -44,21 +44,20 @@ const HumanvsComputer: React.FC<Props> = ({
 
       const newTurn = turn === "X" ? "O" : "X";
       setTurn(newTurn);
+    }
+    const getWinner = findWinner(board);
+    if (getWinner) {
+      localStorage.setItem("winner", getWinner);
+      setGameStatus("finished");
+      return;
+    } else {
+      const data = board.every((v) => v !== "");
 
-      const getWinner = findWinner(board);
-      if (getWinner) {
+      if (data) {
         localStorage.setItem("winner", getWinner);
         setGameStatus("finished");
-        return;
-      } else {
-        const data = board.every((v) => v !== "");
-
-        if (data) {
-          localStorage.setItem("winner", getWinner);
-          setGameStatus("finished");
-        }
-        return;
       }
+      return;
     }
   }, [board, turn, setGameStatus, letter]);
 
